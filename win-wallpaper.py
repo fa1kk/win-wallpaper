@@ -19,22 +19,11 @@ def main():
         print("parameters:")
         print("    root directory    directory to apply solid wallpapers to, includes offline images")
         print("    R value           red value (0-255)")
-        print("    G value           red value (0-255)")
-        print("    B value           red value (0-255)")
+        print("    G value           green value (0-255)")
+        print("    B value           blue value (0-255)")
         return 1
 
     root_dir = argv[1]
-
-    rgb_values = argv[2:5]
-    # conver to int
-    rgb_values = [int(x) for x in rgb_values]
-
-    if not all([0 <= x <= 255 for x in rgb_values]):
-        print("error: rgb values must be between 0-255")
-        return 1
-
-    rgb_r, rgb_g, rgb_b = rgb_values
-
 
     image_paths = [
         f"{root_dir}\\ProgramData\\Microsoft\\User Account Pictures",
@@ -45,6 +34,16 @@ def main():
     if not any([os.path.exists(x) for x in image_paths]):
         print("error: no folders found, invalid directory")
         return 1
+
+    rgb_values = argv[2:5]
+    # convert to int
+    rgb_values = [int(x) for x in rgb_values]
+
+    if not all([0 <= x <= 255 for x in rgb_values]):
+        print("error: rgb values must be between 0-255")
+        return 1
+
+    rgb_r, rgb_g, rgb_b = rgb_values
 
     images = []
 

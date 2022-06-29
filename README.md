@@ -14,8 +14,8 @@ win-wallpaper
 parameters:
     root directory    directory to apply solid wallpapers to, includes offline images
     R value           red value (0-255)
-    G value           red value (0-255)
-    B value           red value (0-255)
+    G value           green value (0-255)
+    B value           blue value (0-255)
 ```
 
 - Examples
