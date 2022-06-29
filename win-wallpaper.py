@@ -10,7 +10,7 @@ def main():
     argc = len(sys.argv)
     argv = sys.argv
 
-    version = "0.1.0"
+    version = "0.1.1"
     subprocess_null = {"stdout": subprocess.DEVNULL, "stderr": subprocess.DEVNULL}
 
     if 1 <= argc <= 4:
