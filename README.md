@@ -32,7 +32,7 @@ Use [this website](https://www.rapidtables.com/web/color/RGB_Color.html) to get 
     "OEMBackground"=dword:00000001
     ```
 
-- This registry key may be required on Windows 10:
+- This registry key may be required on Windows 7/10:
 
     ```
     [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer]
