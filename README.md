@@ -7,7 +7,7 @@ Contact: https://twitter.com/amitxv
 ## Usage
 
 ```
-usage: win-wallpaper <root directory> <R> <G> <B>
+usage: win-wallpaper [root directory] [R] [G] [B] -w7
 
 win-wallpaper
 
@@ -16,6 +16,7 @@ parameters:
     R value           red value (0-255)
     G value           green value (0-255)
     B value           blue value (0-255)
+    -w7               enable windows 7 support
 ```
 
 - Examples

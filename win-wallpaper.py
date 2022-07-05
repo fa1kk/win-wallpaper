@@ -14,13 +14,14 @@ def main():
     subprocess_null = {"stdout": subprocess.DEVNULL, "stderr": subprocess.DEVNULL}
 
     if 1 <= argc <= 4:
-        print("usage: win-wallpaper <root directory> <R> <G> <B>\n")
+        print("usage: win-wallpaper [root directory] [R] [G] [B] -W7\n")
         print(f"win-wallpaper v{version}\n")
         print("parameters:")
         print("    root directory    directory to apply solid wallpapers to, includes offline images")
         print("    R value           red value (0-255)")
         print("    G value           green value (0-255)")
         print("    B value           blue value (0-255)")
+        print("    -w7               enable windows 7 support")
         return 1
 
     root_dir = argv[1]
@@ -61,6 +62,12 @@ def main():
         original = Image.open(image)
         new = Image.new("RGB", original.size, (rgb_r, rgb_g, rgb_b))
         new.save(image)
+
+    if "-w7" in argv:
+        oobe_background_path = f"{root_dir}\\Windows\\System32\\oobe\\info\\backgrounds"
+        os.makedirs(oobe_background_path, exist_ok=True)
+        new = Image.new('RGB', (1920, 1080), (rgb_r, rgb_g, rgb_b))
+        new.save(f"{oobe_background_path}\\backgroundDefault.jpg")
 
     return 0
 
