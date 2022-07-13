@@ -65,9 +65,12 @@ def main():
         subprocess.run(["takeown", "/F", image, "/A"], check=False, **subprocess_null)
         subprocess.run(["icacls", image, "/grant", "Administrators:(F)"], check=False, **subprocess_null)
 
-        original = Image.open(image)
-        new = Image.new("RGB", original.size, ImageColor.getcolor(args.rgb, "RGB"))
-        new.save(image)
+        try:
+            original = Image.open(image)
+            new = Image.new("RGB", original.size, ImageColor.getcolor(args.rgb, "RGB"))
+            new.save(image)
+        except PermissionError:
+            print(f"error: permission error accessing {image}")
 
     if args.win7:
         oobe_background_path = f"{args.dir}\\Windows\\System32\\oobe\\info\\backgrounds"
