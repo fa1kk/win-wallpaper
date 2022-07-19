@@ -9,7 +9,7 @@ from PIL import Image, ImageColor
 def main():
     """CLI Entrypoint"""
 
-    version = "0.3.1"
+    version = "0.3.2"
     subprocess_null = {"stdout": subprocess.DEVNULL, "stderr": subprocess.DEVNULL}
 
     parser = argparse.ArgumentParser(description=f"win-wallpaper v{version}")
