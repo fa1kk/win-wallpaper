@@ -63,7 +63,7 @@ def main():
     for image in images:
         # take ownership of the images
         subprocess.run(["takeown", "/F", image, "/A"], check=False, **subprocess_null)
-        subprocess.run(["icacls", image, "/grant", "Administrators:(F)"], check=False, **subprocess_null)
+        subprocess.run(["icacls", image, "/grant", "Administrators:F"], check=False, **subprocess_null)
 
         try:
             original = Image.open(image)
@@ -78,6 +78,7 @@ def main():
         new = Image.new("RGB", (1920, 1080), rgb_value)
         new.save(f"{oobe_background_path}\\backgroundDefault.jpg")
 
+    print("info: done")
     return 0
 
 
