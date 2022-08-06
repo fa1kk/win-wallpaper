@@ -3,11 +3,21 @@ import subprocess
 import sys
 import os
 import argparse
+import ctypes
 from PIL import Image, ImageColor
 
 
-def main():
+def is_admin() -> bool:
+    """check if script is ran with admin privileges"""
+    return ctypes.windll.shell32.IsUserAnAdmin() != 0
+
+
+def main() -> int:
     """cli entrypoint"""
+
+    if not is_admin():
+        print("error: administrator privileges required")
+        return 1
 
     version = "0.3.2"
     subprocess_null = {"stdout": subprocess.DEVNULL, "stderr": subprocess.DEVNULL}

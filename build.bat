@@ -17,7 +17,7 @@ for %%a in (
         echo error: %%a not found in path
     )
 )
-if not !path_err! == 0 exit /b
+if not !path_err! == 0 exit /b 1
 
 set "CURRENT_DIR=%~dp0"
 set "CURRENT_DIR=!CURRENT_DIR:~0,-1!"
@@ -40,7 +40,7 @@ pip install -r requirements.txt
 copy /y "!CURRENT_DIR!\win-wallpaper.py" "!PROJECT_DIR!"
 cd "!PROJECT_DIR!"
 
-pyinstaller "win-wallpaper.py" --onefile --uac-admin
+pyinstaller "win-wallpaper.py" --onefile
 
 call "!BUILD_ENV!\Scripts\deactivate.bat"
 
@@ -54,4 +54,4 @@ move "!PROJECT_DIR!\dist\win-wallpaper.exe" "!CURRENT_DIR!"
 
 rd /s /q "!BUILD_ENV!"
 
-exit /b
+exit /b 0
