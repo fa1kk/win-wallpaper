@@ -42,7 +42,7 @@ def main() -> int:
         required=True
     )
 
-    parser.add_argument("--win7", action="store_true", help="enables windows 7 support")
+    parser.add_argument("--win7", action="store_true", help="enables Windows 7 support")
 
     args = parser.parse_args()
 
