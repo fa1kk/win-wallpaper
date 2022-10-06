@@ -21,6 +21,7 @@ def main() -> int:
 
     if not ctypes.windll.shell32.IsUserAnAdmin():
         print("error: administrator privileges required")
+        return 1
 
     parser = argparse.ArgumentParser(description=f"win-wallpaper v{version}")
     parser.add_argument("--version", action="version", version=f"win-wallpaper v{version}")
