@@ -1,3 +1,5 @@
+"""win-wallpaper"""
+
 import glob
 import subprocess
 import sys
@@ -7,43 +9,24 @@ import ctypes
 from PIL import Image, ImageColor
 
 
-def is_admin() -> bool:
-    """check if script is ran with admin privileges"""
-    return ctypes.windll.shell32.IsUserAnAdmin() != 0
-
-
 def main() -> int:
     """cli entrypoint"""
 
-    if not is_admin():
-        print("error: administrator privileges required")
-        return 1
-
     version = "0.3.2"
     subprocess_null = {"stdout": subprocess.DEVNULL, "stderr": subprocess.DEVNULL}
+    images = []
+
+    print(f"win-wallpaper v{version}")
+    print("GitHub - https://github.com/amitxv\n")
+
+    if not ctypes.windll.shell32.IsUserAnAdmin():
+        print("error: administrator privileges required")
 
     parser = argparse.ArgumentParser(description=f"win-wallpaper v{version}")
-
     parser.add_argument("--version", action="version", version=f"win-wallpaper v{version}")
-
-    parser.add_argument(
-        "--dir",
-        metavar="<directory>",
-        type=str,
-        help="enter the directory to apply solid wallpapers to, includes offline images",
-        required=True
-    )
-
-    parser.add_argument(
-        "--rgb",
-        metavar="<hex code>",
-        type=str,
-        help="enter the desired rgb value in hex format",
-        required=True
-    )
-
+    parser.add_argument("--dir", metavar="<directory>", type=str, help="enter the directory to apply solid wallpapers to, includes offline images", required=True)
+    parser.add_argument("--rgb",metavar="<hex code>", type=str, help="enter the desired rgb value in hex format", required=True)
     parser.add_argument("--win7", action="store_true", help="enables Windows 7 support")
-
     args = parser.parse_args()
 
     image_paths = [
@@ -52,7 +35,7 @@ def main() -> int:
         f"{args.dir}\\ProgramData\\Microsoft\\Windows\\SystemData"
     ]
 
-    if not any([os.path.exists(x) for x in image_paths]):
+    if not any(os.path.exists(x) for x in image_paths):
         print("error: no folders found, invalid directory")
         return 1
 
@@ -61,8 +44,6 @@ def main() -> int:
     except ValueError:
         print("error: invalid hex code for --rgb argument")
         return 1
-
-    images = []
 
     for folder_path in image_paths:
         for file_type in ["jpg", "png", "bmp"]:
@@ -89,6 +70,7 @@ def main() -> int:
         new.save(f"{oobe_background_path}\\backgroundDefault.jpg")
 
     print("info: done")
+
     return 0
 
 
