@@ -1,6 +1,6 @@
 ## win-wallpaper
 
-CLI tool to replace the default wallpapers and user icons in Windows with a solid color
+Replace the default wallpapers and user icons in Windows with a solid color
 
 Contact: https://twitter.com/amitxv
 
