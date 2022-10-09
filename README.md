@@ -9,8 +9,6 @@ Contact: https://twitter.com/amitxv
 ```
 usage: win-wallpaper.py [-h] [--version] --dir <directory> --rgb <hex code> [--win7]
 
-win-wallpaper
-
 optional arguments:
   -h, --help         show this help message and exit
   --version          show program's version number and exit

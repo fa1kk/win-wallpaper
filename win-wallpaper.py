@@ -23,7 +23,7 @@ def main() -> int:
         print("error: administrator privileges required")
         return 1
 
-    parser = argparse.ArgumentParser(description=f"win-wallpaper v{version}")
+    parser = argparse.ArgumentParser()
     parser.add_argument("--version", action="version", version=f"win-wallpaper v{version}")
     parser.add_argument("--dir", metavar="<directory>", type=str, help="enter the directory to apply solid wallpapers to, includes offline images", required=True)
     parser.add_argument("--rgb", metavar="<hex code>", type=str, help="enter the desired rgb value in hex format", required=True)
