@@ -12,7 +12,7 @@ from PIL import Image, ImageColor
 def main() -> int:
     """cli entrypoint"""
 
-    version = "0.3.2"
+    version = "0.3.3"
     subprocess_null = {"stdout": subprocess.DEVNULL, "stderr": subprocess.DEVNULL}
     images = []
 
