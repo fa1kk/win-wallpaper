@@ -8,8 +8,8 @@ setlocal EnableDelayedExpansion
 
 set "path_err=0"
 for %%a in (
-    "python.exe",
-    "pip.exe",
+    "python.exe"
+    "pip.exe"
 ) do (
     where %%a
     if not !errorlevel! == 0 (
