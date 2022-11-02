@@ -1,5 +1,3 @@
-"""win-wallpaper"""
-
 import glob
 import subprocess
 import sys
@@ -7,7 +5,6 @@ import os
 import argparse
 import ctypes
 from PIL import Image, ImageColor
-
 
 def main() -> int:
     """program entrypoint"""
@@ -73,7 +70,6 @@ def main() -> int:
     print("info: done")
 
     return 0
-
 
 if __name__ == "__main__":
     sys.exit(main())
