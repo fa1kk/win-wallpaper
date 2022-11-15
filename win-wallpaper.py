@@ -38,7 +38,7 @@ def main() -> int:
         return 1
 
     try:
-        rgb_value = ImageColor.getcolor(args.rgb, "RGB")
+        rgb_value = tuple(ImageColor.getcolor(args.rgb, "RGB"))
     except ValueError:
         print("error: invalid hex code for --rgb argument")
         return 1
@@ -64,8 +64,13 @@ def main() -> int:
     if args.win7:
         oobe_background_path = f"{args.dir}\\Windows\\System32\\oobe\\info\\backgrounds"
         os.makedirs(oobe_background_path, exist_ok=True)
-        new = Image.new("RGB", (1920, 1080), rgb_value)
-        new.save(f"{oobe_background_path}\\backgroundDefault.jpg")
+        image = f"{oobe_background_path}\\backgroundDefault.jpg"
+        try:
+            new = Image.new("RGB", (1920, 1080), rgb_value)
+            new.save(image)
+        except PermissionError:
+            print(f"error: permission error accessing {image}")
+            return 1
 
     print("info: done")
 
