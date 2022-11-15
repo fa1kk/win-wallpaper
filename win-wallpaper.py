@@ -56,7 +56,7 @@ def main() -> int:
 
         try:
             original = Image.open(image)
-            new = Image.new("RGB", original.size, ImageColor.getcolor(args.rgb, "RGB"))
+            new = Image.new("RGB", original.size, rgb_value)
             new.save(image)
         except PermissionError:
             print(f"error: permission error accessing {image}")
