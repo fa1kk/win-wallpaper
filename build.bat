@@ -17,13 +17,13 @@ if not !errorlevel! == 0 (
 
 set "err=0"
 for %%a in (
-    python.exe
-    pip.exe
+    "python.exe"
+    "pip.exe"
 ) do (
-    where %%a > nul 2>&1
+    where %%~a > nul 2>&1
     if not !errorlevel! == 0 (
         set "err=1"
-        echo error: %%a not found in path
+        echo error: %%~a not found in path
     )
 )
 if not !err! == 0 exit /b 1
