@@ -4,7 +4,6 @@ setlocal EnableDelayedExpansion
 :: Requirements
 ::
 :: - Python 3.8.6 preferred
-:: - 7-Zip
 
 echo info: checking for an internet connection
 ping 1.1.1.1 > nul 2>&1
@@ -33,7 +32,6 @@ set "CURRENT_DIR=!CURRENT_DIR:~0,-1!"
 
 set "BUILD_ENV=!CURRENT_DIR!\BUILD_ENV"
 set "PROJECT_DIR=!BUILD_ENV!\main"
-set "PUBLISH_DIR=!BUILD_ENV!\win-wallpaper"
 
 if exist "!BUILD_ENV!" (
     rd /s /q "!BUILD_ENV!"
