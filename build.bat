@@ -42,19 +42,19 @@ mkdir "!PROJECT_DIR!"
 python -m venv "!BUILD_ENV!"
 call "!BUILD_ENV!\Scripts\activate.bat"
 
-pip install -r ".\requirements.txt"
+pip install -r "requirements.txt"
 
 copy /y "!CURRENT_DIR!\win-wallpaper.py" "!PROJECT_DIR!"
 cd "!PROJECT_DIR!"
 
-pyinstaller ".\win-wallpaper.py" --onefile
+pyinstaller "win-wallpaper.py" --onefile
 
 call "!BUILD_ENV!\Scripts\deactivate.bat"
 
 cd "!CURRENT_DIR!"
 
-if exist ".\win-wallpaper.exe" (
-    del /f /q ".\win-wallpaper.exe"
+if exist "win-wallpaper.exe" (
+    del /f /q "win-wallpaper.exe"
 )
 
 move "!PROJECT_DIR!\dist\win-wallpaper.exe" "!CURRENT_DIR!"
