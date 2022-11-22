@@ -2,7 +2,6 @@
 setlocal EnableDelayedExpansion
 
 :: Requirements
-::
 :: - Python 3.8.6 preferred
 
 echo info: checking for an internet connection
