@@ -1,12 +1,12 @@
-## win-wallpaper
+# win-wallpaper
 
 Replace the default wallpapers and user icons in Windows with a customizable solid color.
 
-Contact: https://twitter.com/amitxv
+Contact: <https://twitter.com/amitxv>
 
 ## Usage
 
-```
+```txt
 usage: win-wallpaper.py [-h] [--version] --dir <directory> --rgb <hex code> [--win7]
 
 optional arguments:
@@ -26,14 +26,14 @@ optional arguments:
 
 - This registry key may be required on Windows 7
 
-    ```
+    ```txt
     [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background]
     "OEMBackground"=dword:00000001
     ```
 
 - This registry key may be required on Windows 7+
 
-    ```
+    ```txt
     [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer]
     "UseDefaultTile"=dword:00000001
     ```
