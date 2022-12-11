@@ -2,8 +2,6 @@
 
 Replace the default wallpapers and user icons in Windows with a customizable solid color
 
-Contact: <https://twitter.com/amitxv>
-
 ## Usage
 
 ```txt
