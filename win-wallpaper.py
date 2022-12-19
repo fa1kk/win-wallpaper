@@ -6,6 +6,7 @@ import argparse
 import ctypes
 from PIL import Image, ImageColor
 
+
 def main() -> int:
     """program entrypoint"""
 
@@ -21,16 +22,30 @@ def main() -> int:
         return 1
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--version", action="version", version=f"win-wallpaper v{version}")
-    parser.add_argument("--dir", metavar="<directory>", type=str, help="enter the directory to apply solid wallpapers to, includes offline images", required=True)
-    parser.add_argument("--rgb", metavar="<hex code>", type=str, help="enter the desired rgb value in hex format", required=True)
+    parser.add_argument(
+        "--version", action="version", version=f"win-wallpaper v{version}"
+    )
+    parser.add_argument(
+        "--dir",
+        metavar="<directory>",
+        type=str,
+        help="enter the directory to apply solid wallpapers to, includes offline images",
+        required=True,
+    )
+    parser.add_argument(
+        "--rgb",
+        metavar="<hex code>",
+        type=str,
+        help="enter the desired rgb value in hex format",
+        required=True,
+    )
     parser.add_argument("--win7", action="store_true", help="enables Windows 7 support")
     args = parser.parse_args()
 
     image_paths = [
         f"{args.dir}\\ProgramData\\Microsoft\\User Account Pictures",
         f"{args.dir}\\Windows\\Web",
-        f"{args.dir}\\ProgramData\\Microsoft\\Windows\\SystemData"
+        f"{args.dir}\\ProgramData\\Microsoft\\Windows\\SystemData",
     ]
 
     if not any(os.path.exists(x) for x in image_paths):
@@ -52,7 +67,11 @@ def main() -> int:
     for image in images:
         # take ownership of the images
         subprocess.run(["takeown", "/F", image, "/A"], check=False, **subprocess_null)
-        subprocess.run(["icacls", image, "/grant", "Administrators:F"], check=False, **subprocess_null)
+        subprocess.run(
+            ["icacls", image, "/grant", "Administrators:F"],
+            check=False,
+            **subprocess_null,
+        )
 
         try:
             original = Image.open(image)
@@ -75,6 +94,7 @@ def main() -> int:
     print("info: done")
 
     return 0
+
 
 if __name__ == "__main__":
     sys.exit(main())
