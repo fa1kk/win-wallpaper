@@ -27,7 +27,7 @@ def modify_image(image_path, rgb_value):
 
 def main():
     version = "0.3.3"
-    images = []
+    images = set()
 
     print(f"win-wallpaper v{version}")
     print("GitHub - https://github.com/amitxv\n")
@@ -74,8 +74,7 @@ def main():
     for folder_path in image_paths:
         for file_type in ("jpg", "png", "bmp"):
             for image in glob.glob(f"{folder_path}/**/*.{file_type}", recursive=True):
-                if image not in images:
-                    images.append(image)
+                images.add(image)
 
     pool_args = [(image, rgb_value) for image in images]
     with multiprocessing.Pool() as pool:
