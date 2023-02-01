@@ -5,12 +5,13 @@ import argparse
 import ctypes
 import multiprocessing
 from PIL import Image, ImageColor
+from typing import Set, Tuple
 
 
 stdnull = {"stdout": subprocess.DEVNULL, "stderr": subprocess.DEVNULL}
 
 
-def modify_image(image_path, rgb_value):
+def modify_image(image_path: str, rgb_value: Tuple[int]) -> None:
     # take ownership of the images
     subprocess.run(["takeown", "/F", image_path, "/A"], check=False, **stdnull)
     subprocess.run(["icacls", image_path, "/grant", "Administrators:F"], check=False, **stdnull)
@@ -25,9 +26,9 @@ def modify_image(image_path, rgb_value):
         print(f"error: permission error accessing {image_path}")
 
 
-def main():
+def main() -> None:
     version = "0.3.3"
-    images = set()
+    images: Set[str] = set()
 
     print(f"win-wallpaper v{version}")
     print("GitHub - https://github.com/amitxv\n")
