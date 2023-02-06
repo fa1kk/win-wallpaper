@@ -1,12 +1,12 @@
-import glob
-import subprocess
-import os
 import argparse
 import ctypes
+import glob
 import multiprocessing
-from PIL import Image, ImageColor
+import os
+import subprocess
 from typing import Set, Tuple
 
+from PIL import Image, ImageColor
 
 stdnull = {"stdout": subprocess.DEVNULL, "stderr": subprocess.DEVNULL}
 
