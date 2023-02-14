@@ -95,8 +95,6 @@ def main() -> None:
 
     print("info: done")
 
-    return
-
 
 if __name__ == "__main__":
     main()
