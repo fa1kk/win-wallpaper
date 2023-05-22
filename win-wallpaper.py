@@ -4,6 +4,7 @@ import glob
 import multiprocessing
 import os
 import subprocess
+import sys
 from typing import Set, Tuple
 
 from PIL import Image, ImageColor
@@ -26,7 +27,7 @@ def modify_image(image_path: str, rgb_value: Tuple[int]) -> None:
         print(f"error: permission error accessing {image_path}")
 
 
-def main() -> None:
+def main() -> int:
     version = "0.3.3"
     images: Set[str] = set()
 
@@ -35,7 +36,7 @@ def main() -> None:
 
     if not ctypes.windll.shell32.IsUserAnAdmin():
         print("error: administrator privileges required")
-        return
+        return 1
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--version", action="version", version=f"win-wallpaper v{version}")
@@ -64,13 +65,13 @@ def main() -> None:
 
     if not any(os.path.exists(path) for path in image_paths):
         print("error: no folders found, invalid directory")
-        return
+        return 1
 
     try:
         rgb_value = tuple(ImageColor.getcolor(args.rgb, "RGB"))
     except ValueError:
         print("error: invalid hex code for --rgb argument")
-        return
+        return 1
 
     for folder_path in image_paths:
         for file_type in ("jpg", "png", "bmp"):
@@ -91,10 +92,12 @@ def main() -> None:
                 new_image.save(image)
         except PermissionError:
             print(f"error: permission error accessing {image}")
-            return
+            return 1
 
     print("info: done")
 
+    return 0
+
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
