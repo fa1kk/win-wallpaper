@@ -31,4 +31,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
-          files: dist\win-wallpaper.exe
+          files: dist/win-wallpaper.exe
