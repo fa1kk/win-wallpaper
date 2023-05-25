@@ -28,7 +28,7 @@ def modify_image(image_path: str, rgb_value: Tuple[int]) -> None:
 
 
 def main() -> int:
-    version = "0.3.4"
+    version = "0.3.5"
     images: Set[str] = set()
 
     print(f"win-wallpaper v{version}")
