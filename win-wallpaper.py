@@ -73,9 +73,6 @@ def main() -> int:
         print("error: invalid hex code for --rgb argument")
         return 1
 
-    # for packed binary
-    multiprocessing.freeze_support()
-
     for folder_path in image_paths:
         for file_type in ("jpg", "png", "bmp"):
             for image in glob.glob(f"{folder_path}/**/*.{file_type}", recursive=True):
@@ -103,4 +100,7 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    # for packed binary
+    multiprocessing.freeze_support()
+
     sys.exit(main())
