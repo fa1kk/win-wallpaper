@@ -31,8 +31,7 @@ def main() -> int:
     version = "0.3.5"
     images: Set[str] = set()
 
-    print(f"win-wallpaper v{version}")
-    print("GitHub - https://github.com/amitxv\n")
+    print(f"win-wallpaper Version {version}\nCopyright (C) github.com/amitxv. All rights reserved.\n")
 
     if not ctypes.windll.shell32.IsUserAnAdmin():
         print("error: administrator privileges required")
