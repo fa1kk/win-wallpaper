@@ -5,11 +5,20 @@ import multiprocessing
 import os
 import subprocess
 import sys
-from typing import Set, Tuple
+import winreg
+from typing import Set, Tuple, Union
 
 from PIL import Image, ImageColor
 
 stdnull = {"stdout": subprocess.DEVNULL, "stderr": subprocess.DEVNULL}
+
+
+def add_registry_key(path: str, key_name: str, value: Union[str, int], value_type: int) -> None:
+    with winreg.CreateKey(
+        winreg.HKEY_LOCAL_MACHINE,
+        path,
+    ) as key:
+        winreg.SetValueEx(key, key_name, 0, value_type, value)
 
 
 def modify_image(image_path: str, rgb_value: Tuple[int]) -> None:
@@ -54,6 +63,7 @@ def main() -> int:
         required=True,
     )
     parser.add_argument("--win7", action="store_true", help="enables Windows 7 support")
+    parser.add_argument("--offline", action="store_true", help="indicates that the image is mounted offline")
     args = parser.parse_args()
 
     image_paths = (
@@ -92,6 +102,37 @@ def main() -> int:
         except PermissionError:
             print(f"error: permission error accessing {image}")
             return 1
+
+    print("info: images replaced successfully")
+
+    oem_background = lambda hive: add_registry_key(
+        f"{hive}\\Microsoft\\Windows\\CurrentVersion\\Authentication\\LogonUI\\Background",
+        "OEMBackground",
+        1,
+        winreg.REG_DWORD,
+    )
+
+    use_default_tile = lambda hive: add_registry_key(
+        f"{hive}\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+        "UseDefaultTile",
+        1,
+        winreg.REG_DWORD,
+    )
+
+    if args.offline:
+        subprocess.run(["reg.exe", "load", "HKLM\\TempHive", f"{args.dir}\\Windows\\system32\\config\\SOFTWARE"])
+        use_default_tile("TempHive")
+
+        if args.win7:
+            oem_background("TempHive")
+
+        subprocess.run(["reg.exe", "unload", "HKLM\\TempHive"])
+
+    else:
+        use_default_tile("SOFTWARE")
+
+        if args.win7:
+            oem_background("SOFTWARE")
 
     print("info: done")
 

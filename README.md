@@ -17,10 +17,14 @@ optional arguments:
 
 - Examples
 
-    - **win-wallpaper --dir "C:" --rgb #000000** will replace the wallpapers on the current installation with solid black images
-    - **win-wallpaper --dir "C:\temp" --rgb #A01EE6** will replace the wallpapers in the mounted image **C:\temp** with solid purple images
+    - ``win-wallpaper --dir "C:" --rgb #000000`` will replace the wallpapers on the current installation with solid black images
+    - ``win-wallpaper --dir "C:\temp" --rgb #A01EE6 --offline`` will replace the wallpapers in the mounted image **C:\temp** with solid purple images
 
 - Use [this website](https://www.rapidtables.com/convert/color/rgb-to-hex.html) to get the desired RGB hex code values
+
+## Required Registry Keys
+
+The program automatically adds the registry keys below. Ensure ``--offline`` is used accordingly so that the registry keys are applied in the correct places.
 
 - This registry key may be required on Windows 7
 
