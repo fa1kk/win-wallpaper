@@ -37,7 +37,7 @@ def modify_image(image_path: str, rgb_value: Tuple[int]) -> None:
 
 
 def main() -> int:
-    version = "0.3.5"
+    version = "0.3.6"
     images: Set[str] = set()
 
     print(f"win-wallpaper Version {version}\nCopyright (C) github.com/amitxv. All rights reserved.\n")
