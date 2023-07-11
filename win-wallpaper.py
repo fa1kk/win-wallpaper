@@ -120,7 +120,7 @@ def main() -> int:
     )
 
     if args.offline:
-        subprocess.run(["reg.exe", "load", "HKLM\\TempHive", f"{args.dir}\\Windows\\system32\\config\\SOFTWARE"])
+        subprocess.run(["reg.exe", "load", "HKLM\\TempHive", f"{args.dir}\\Windows\\System32\\config\\SOFTWARE"])
         use_default_tile("TempHive")
 
         if args.win7:
