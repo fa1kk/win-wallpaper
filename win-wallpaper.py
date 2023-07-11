@@ -6,7 +6,7 @@ import os
 import subprocess
 import sys
 import winreg
-from typing import Set, Tuple, Union
+from typing import Callable, Set, Tuple, Union
 
 from PIL import Image, ImageColor
 
@@ -105,14 +105,14 @@ def main() -> int:
 
     print("info: images replaced successfully")
 
-    oem_background = lambda hive: add_registry_key(
+    oem_background: Callable[[str], None] = lambda hive: add_registry_key(
         f"{hive}\\Microsoft\\Windows\\CurrentVersion\\Authentication\\LogonUI\\Background",
         "OEMBackground",
         1,
         winreg.REG_DWORD,
     )
 
-    use_default_tile = lambda hive: add_registry_key(
+    use_default_tile: Callable[[str], None] = lambda hive: add_registry_key(
         f"{hive}\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
         "UseDefaultTile",
         1,
@@ -120,13 +120,15 @@ def main() -> int:
     )
 
     if args.offline:
-        subprocess.run(["reg.exe", "load", "HKLM\\TempHive", f"{args.dir}\\Windows\\System32\\config\\SOFTWARE"])
+        subprocess.run(
+            ["reg.exe", "load", "HKLM\\TempHive", f"{args.dir}\\Windows\\System32\\config\\SOFTWARE"], check=False
+        )
         use_default_tile("TempHive")
 
         if args.win7:
             oem_background("TempHive")
 
-        subprocess.run(["reg.exe", "unload", "HKLM\\TempHive"])
+        subprocess.run(["reg.exe", "unload", "HKLM\\TempHive"], check=False)
 
     else:
         use_default_tile("SOFTWARE")
