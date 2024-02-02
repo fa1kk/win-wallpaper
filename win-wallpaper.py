@@ -6,14 +6,19 @@ import os
 import subprocess
 import sys
 import winreg
-from typing import Callable, Set, Tuple, Union
+from collections.abc import Callable
+from typing import Any
 
 from PIL import Image, ImageColor
 
-stdnull = {"stdout": subprocess.DEVNULL, "stderr": subprocess.DEVNULL}
 
-
-def add_registry_key(path: str, key_name: str, value: Union[str, int], value_type: int) -> None:
+def add_registry_key(
+    path: str,
+    key_name: str,
+    value: str | int,
+    value_type: int,
+) -> Any | None:
+    """Read key values from Windows registry."""
     with winreg.CreateKey(
         winreg.HKEY_LOCAL_MACHINE,
         path,
@@ -21,10 +26,21 @@ def add_registry_key(path: str, key_name: str, value: Union[str, int], value_typ
         winreg.SetValueEx(key, key_name, 0, value_type, value)
 
 
-def modify_image(image_path: str, rgb_value: Tuple[int]) -> None:
+def modify_image(image_path: str, rgb_value: tuple[int]) -> None:
+    """Modify image with desired RGB value."""
     # take ownership of the images
-    subprocess.run(["takeown", "/F", image_path, "/A"], check=False, **stdnull)
-    subprocess.run(["icacls", image_path, "/grant", "Administrators:F"], check=False, **stdnull)
+    subprocess.run(
+        ["takeown", "/F", image_path, "/A"],
+        check=False,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+    subprocess.run(
+        ["icacls", image_path, "/grant", "Administrators:F"],
+        check=False,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
 
     try:
         with Image.open(image_path) as original_image:
@@ -36,18 +52,24 @@ def modify_image(image_path: str, rgb_value: Tuple[int]) -> None:
         print(f"error: permission error accessing {image_path}")
 
 
-def main() -> int:
+def main() -> int:  # noqa: C901, PLR0912, D103
     version = "0.3.7"
-    images: Set[str] = set()
+    images: set[str] = set()
 
-    print(f"win-wallpaper Version {version} - GPLv3\nGitHub - https://github.com/amitxv\n")
+    print(
+        f"win-wallpaper Version {version} - GPLv3\nGitHub - https://github.com/amitxv\n",
+    )
 
     if not ctypes.windll.shell32.IsUserAnAdmin():
         print("error: administrator privileges required")
         return 1
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--version", action="version", version=f"win-wallpaper v{version}")
+    parser.add_argument(
+        "--version",
+        action="version",
+        version=f"win-wallpaper v{version}",
+    )
     parser.add_argument(
         "--dir",
         metavar="<directory>",
@@ -63,7 +85,11 @@ def main() -> int:
         required=True,
     )
     parser.add_argument("--win7", action="store_true", help="enables Windows 7 support")
-    parser.add_argument("--offline", action="store_true", help="indicates that the image is mounted offline")
+    parser.add_argument(
+        "--offline",
+        action="store_true",
+        help="indicates that the image is mounted offline",
+    )
     args = parser.parse_args()
 
     image_paths = (
@@ -77,7 +103,7 @@ def main() -> int:
         return 1
 
     try:
-        rgb_value = tuple(ImageColor.getcolor(args.rgb, "RGB"))
+        rgb_value = ImageColor.getcolor(args.rgb, "RGB")
     except ValueError:
         print("error: invalid hex code for --rgb argument")
         return 1
@@ -121,7 +147,13 @@ def main() -> int:
 
     if args.offline:
         subprocess.run(
-            ["reg.exe", "load", "HKLM\\TempHive", f"{args.dir}\\Windows\\System32\\config\\SOFTWARE"], check=False
+            [
+                "reg.exe",
+                "load",
+                "HKLM\\TempHive",
+                f"{args.dir}\\Windows\\System32\\config\\SOFTWARE",
+            ],
+            check=False,
         )
         use_default_tile("TempHive")
 
