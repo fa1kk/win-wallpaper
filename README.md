@@ -1,5 +1,7 @@
 # win-wallpaper
 
+[![Downloads](https://img.shields.io/github/downloads/amitxv/win-wallpaper/total.svg)](https://github.com/amitxv/win-wallpaper/releases)
+
 [![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/amitxv)
 
 ## Usage
