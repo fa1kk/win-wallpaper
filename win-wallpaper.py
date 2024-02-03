@@ -18,7 +18,6 @@ def add_registry_key(
     value: str | int,
     value_type: int,
 ) -> Any | None:
-    """Read key values from Windows registry."""
     with winreg.CreateKey(
         winreg.HKEY_LOCAL_MACHINE,
         path,
@@ -27,7 +26,6 @@ def add_registry_key(
 
 
 def modify_image(image_path: str, rgb_value: tuple[int]) -> None:
-    """Modify image with desired RGB value."""
     # take ownership of the images
     subprocess.run(
         ["takeown", "/F", image_path, "/A"],
