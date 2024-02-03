@@ -50,7 +50,7 @@ def modify_image(image_path: str, rgb_value: tuple[int]) -> None:
         print(f"error: permission error accessing {image_path}")
 
 
-def main() -> int:  # noqa: C901, PLR0912, D103
+def main() -> int:
     version = "0.3.7"
     images: set[str] = set()
 
