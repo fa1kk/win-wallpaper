@@ -1,8 +1,11 @@
 name: Create release
 
 on:
-  release:
-    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version of the program to build. This will be used for the tag and release name."
+        required: true
 
 jobs:
   build:
@@ -26,7 +29,10 @@ jobs:
       - name: Build executable
         run: pyinstaller "win-wallpaper.py" --onefile
 
-      - name: Upload to release
-        uses: softprops/action-gh-release@v1
+      - name: Create release
+        uses: ncipollo/release-action@v1
         with:
-          files: dist/win-wallpaper.exe
+          tag: ${{ inputs.version }}
+          name: ${{ inputs.version }}
+          artifacts: dist/win-wallpaper.exe
+          generateReleaseNotes: true
