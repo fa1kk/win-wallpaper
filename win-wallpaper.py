@@ -29,13 +29,13 @@ def modify_image(image_path: str, rgb_value: tuple[int]) -> None:
     # take ownership of the images
     subprocess.run(
         ["takeown", "/F", image_path, "/A"],
-        check=False,
+        check=True,
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
     )
     subprocess.run(
         ["icacls", image_path, "/grant", "Administrators:F"],
-        check=False,
+        check=True,
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
     )
@@ -151,14 +151,14 @@ def main() -> int:
                 "HKLM\\TempHive",
                 f"{args.dir}\\Windows\\System32\\config\\SOFTWARE",
             ],
-            check=False,
+            check=True,
         )
         use_default_tile("TempHive")
 
         if args.win7:
             oem_background("TempHive")
 
-        subprocess.run(["reg.exe", "unload", "HKLM\\TempHive"], check=False)
+        subprocess.run(["reg.exe", "unload", "HKLM\\TempHive"], check=True)
 
     else:
         use_default_tile("SOFTWARE")
