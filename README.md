@@ -7,7 +7,7 @@
 ## Usage
 
 ```
-usage: win-wallpaper.py [-h] [--version] --dir <directory> --rgb <hex code> [--win7]
+usage: win-wallpaper [-h] [--version] --dir <directory> --rgb <hex code> [--win7]
 
 optional arguments:
   -h, --help         show this help message and exit
