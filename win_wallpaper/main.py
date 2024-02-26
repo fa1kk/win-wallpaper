@@ -50,7 +50,7 @@ def modify_image(image_path: str, rgb_value: tuple[int]) -> None:
         with Image.new("RGB", size, rgb_value) as new_image:
             new_image.save(image_path)
     except PermissionError as e:
-        logger.error("permission error accessing %s. %s", image_path, e)
+        logger.exception("permission error accessing %s. %s", image_path, e)
 
 
 def main() -> int:
@@ -129,7 +129,7 @@ def main() -> int:
             with Image.new("RGB", (1920, 1080), rgb_value) as new_image:
                 new_image.save(image)
         except PermissionError as e:
-            logger.error("permission error accessing %s. %s", image, e)
+            logger.error("permission error accessing %s", image)
             return 1
 
     logger.info("images replaced successfully")
