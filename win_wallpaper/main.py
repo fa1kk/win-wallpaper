@@ -1,6 +1,7 @@
 import argparse
 import ctypes
 import glob
+import logging
 import multiprocessing
 import os
 import subprocess
@@ -10,6 +11,8 @@ from collections.abc import Callable
 from typing import Any
 
 from PIL import Image, ImageColor
+
+logger = logging.getLogger("CLI")
 
 
 def add_registry_key(
@@ -46,11 +49,13 @@ def modify_image(image_path: str, rgb_value: tuple[int]) -> None:
 
         with Image.new("RGB", size, rgb_value) as new_image:
             new_image.save(image_path)
-    except PermissionError:
-        print(f"error: permission error accessing {image_path}")
+    except PermissionError as e:
+        logger.error("permission error accessing %s. %s", image_path, e)
 
 
 def main() -> int:
+    logging.basicConfig(format="[%(name)s] %(levelname)s: %(message)s", level=logging.INFO)
+
     version = "0.3.7"
     images: set[str] = set()
 
@@ -59,7 +64,7 @@ def main() -> int:
     )
 
     if not ctypes.windll.shell32.IsUserAnAdmin():
-        print("error: administrator privileges required")
+        logger.error("administrator privileges required")
         return 1
 
     parser = argparse.ArgumentParser()
@@ -97,13 +102,13 @@ def main() -> int:
     )
 
     if not any(os.path.exists(path) for path in image_paths):
-        print("error: no folders found, invalid directory")
+        logger.error("no folders found, invalid directory")
         return 1
 
     try:
         rgb_value = ImageColor.getcolor(args.rgb, "RGB")
     except ValueError:
-        print("error: invalid hex code for --rgb argument")
+        logger.error("invalid hex code for --rgb argument")
         return 1
 
     for folder_path in image_paths:
@@ -123,11 +128,11 @@ def main() -> int:
         try:
             with Image.new("RGB", (1920, 1080), rgb_value) as new_image:
                 new_image.save(image)
-        except PermissionError:
-            print(f"error: permission error accessing {image}")
+        except PermissionError as e:
+            logger.error("permission error accessing %s. %s", image, e)
             return 1
 
-    print("info: images replaced successfully")
+    logger.info("images replaced successfully")
 
     oem_background: Callable[[str], None] = lambda hive: add_registry_key(
         f"{hive}\\Microsoft\\Windows\\CurrentVersion\\Authentication\\LogonUI\\Background",
@@ -166,7 +171,7 @@ def main() -> int:
         if args.win7:
             oem_background("SOFTWARE")
 
-    print("info: done")
+    logger.info("done")
 
     return 0
 
