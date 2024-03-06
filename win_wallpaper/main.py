@@ -59,6 +59,9 @@ def main() -> int:
     version = "0.4.0"
     images: set[str] = set()
 
+    # for packed binary
+    multiprocessing.freeze_support()
+
     print(
         f"win-wallpaper Version {version} - GPLv3\nGitHub - https://github.com/amitxv\n",
     )
@@ -177,7 +180,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    # for packed binary
-    multiprocessing.freeze_support()
-
     sys.exit(main())
