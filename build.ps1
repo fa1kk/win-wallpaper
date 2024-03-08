@@ -17,7 +17,7 @@ function main() {
     $entryPoint = "..\..\win_wallpaper\main.py"
 
     # pack executable
-    New-Item -ItemType Directory -Path ".\build\pyinstaller\"
+    mkdir ".\build\pyinstaller\"
     Push-Location ".\build\pyinstaller\"
     pyinstaller $entryPoint --onefile --name win-wallpaper
     Pop-Location
